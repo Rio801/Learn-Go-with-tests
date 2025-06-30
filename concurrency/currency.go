@@ -5,14 +5,16 @@ import (
 	"time"
 )
 
-func Racer(urlone, urltwo string) (winner string) {
-	startone := time.Now()
-	http.Get(urlone)
-	startoneDuration := time.Since(startone)
+func measureDuration(url string) time.Duration {
+	start := time.Now()
+	http.Get(url)
+	ending := time.Since(start)
+	return ending
+}
 
-	starttwo := time.Now()
-	http.Get(urltwo)
-	starttwoDuration := time.Since(starttwo)
+func Racer(urlone, urltwo string) (winner string) {
+	startoneDuration := measureDuration(urlone)
+	starttwoDuration := measureDuration(urltwo)
 
 	if startoneDuration < starttwoDuration {
 		return urlone
